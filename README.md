@@ -1,9 +1,3 @@
-<style>
-  h1 {
-    color: red;
-  }
-</style>
-
 # philosophers
 
 ## FONCTIONS
@@ -23,4 +17,4 @@ Valeur de retour : 0(OK) -1(KO) errno utilisable
 - Pthread_mutex_lock
 - Pthread_mutex_unlock
 
-- <h1>PPPPPPPPPP</h1>
+
