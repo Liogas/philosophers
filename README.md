@@ -1,5 +1,18 @@
 # philosophers
 
+## INFOS DERNIER GIT
+
+## EN COURS
+- Mettre en place les structures contenant les donnees du projet
+- Parsing
+- Creation des philos
+
+## A FAIRE
+- Mise en place de la routine d'un philo
+- Affichage du message de changement de statut
+
+## FINI
+
 ## FONCTIONS
 - Memset
 - Printf
