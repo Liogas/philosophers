@@ -1,14 +1,16 @@
 # philosophers
 
 ## INFOS DERNIER GIT
-
-## EN COURS
 - Mettre en place les structures contenant les donnees du projet
 - Parsing
 - Creation des philos
+- Création et mise en place des fourchettes
+
+## EN COURS
+- Manipulation du temps écoulée
+- Mise en place de la routine d'un philo
 
 ## A FAIRE
-- Mise en place de la routine d'un philo
 - Affichage du message de changement de statut
 
 ## FINI

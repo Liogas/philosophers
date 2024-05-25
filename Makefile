@@ -2,7 +2,8 @@ CC 			= cc
 CFLAGS		= -Wall -Werror -Wextra -g3
 INCLUDES	= -I./incs/
 SRCS 		=	srcs/main.c srcs/utils.c srcs/create_config.c \
-				srcs/ft_ltoa.c srcs/ft_itoa.c srcs/create_philos.c
+				srcs/ft_ltoa.c srcs/ft_itoa.c srcs/create_philos.c \
+				srcs/create_forks.c
 OBJS 		= $(SRCS:.c=.o)
 NAME 		= philo
 

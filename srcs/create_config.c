@@ -6,13 +6,13 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:45:55 by glions            #+#    #+#             */
-/*   Updated: 2024/05/24 16:35:38 by glions           ###   ########.fr       */
+/*   Updated: 2024/05/25 16:15:56 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	get_limit(char *av, t_config_philo *config)
+static int	get_limit(char *av, t_config_philo *config)
 {
 	char	*str;
 	int		e;
@@ -27,7 +27,7 @@ int	get_limit(char *av, t_config_philo *config)
 	return (e);
 }
 
-int	get_long(char *nbr, long *value)
+static int	get_long(char *nbr, long *value)
 {
 	char	*str;
 	int		e;
@@ -57,5 +57,6 @@ t_config_philo	*create_config(char **av, int ac)
 		return (free(config), NULL);
 	if (ac == 4 && !get_limit(av[3], config))
 		return (free(config), NULL);
+	config->time_start = -1;
 	return (config);
 }
