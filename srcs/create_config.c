@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:45:55 by glions            #+#    #+#             */
-/*   Updated: 2024/05/25 16:15:56 by glions           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:14:31 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ t_config_philo	*create_config(char **av, int ac)
 	if (ac == 4 && !get_limit(av[3], config))
 		return (free(config), NULL);
 	config->time_start = -1;
+	if (pthread_mutex_init(&config->mutex_time, NULL))
+		return (free(config), NULL);
 	return (config);
 }

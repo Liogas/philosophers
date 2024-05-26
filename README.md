@@ -1,10 +1,7 @@
 # philosophers
 
 ## INFOS DERNIER GIT
-- Mettre en place les structures contenant les donnees du projet
-- Parsing
-- Creation des philos
-- Création et mise en place des fourchettes
+- Manipulation du temps écoulée (chrono pour chaque philo lancé)
 
 ## EN COURS
 - Manipulation du temps écoulée
@@ -14,6 +11,10 @@
 - Affichage du message de changement de statut
 
 ## FINI
+- Mettre en place les structures contenant les donnees du projet
+- Parsing
+- Creation des philos
+- Création et mise en place des fourchettes
 
 ## FONCTIONS
 - Memset

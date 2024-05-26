@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:36:01 by glions            #+#    #+#             */
-/*   Updated: 2024/05/25 16:14:14 by glions           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:57:44 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_philos(t_node_philo *philos, int size)
 	}
 }
 
-static t_philo	*create_dt(t_config_philo **c)
+static t_philo	*create_philo_dt(t_config_philo **c, int id)
 {
 	t_philo	*new;
 
@@ -37,8 +37,11 @@ static t_philo	*create_dt(t_config_philo **c)
 	if (!new)
 		return (NULL);
 	new->config = *c;
+	new->id = id;
 	new->fl = NULL;
 	new->fr = NULL;
+	new->exit_value = 0;
+	new->time = -1;
 	new->status = 0;
 	new->time_last_eat = (*c)->ttd;
 	return (new);
@@ -51,12 +54,11 @@ static t_node_philo	*create_philo(t_node_philo **right, int id, t_config_philo *
 	new = malloc(sizeof(t_node_philo));
 	if (!new)
 		return (NULL);
-	new->dt = create_dt(c);
+	new->dt = create_philo_dt(c, id);
 	if (!new->dt)
 		return (free(new), NULL);
 	new->left = NULL;
 	new->right = NULL;
-	new->id = id;
 	if (right && *right)
 	{
 		(*right)->left = new;
