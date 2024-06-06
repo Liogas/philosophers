@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:31:06 by glions            #+#    #+#             */
-/*   Updated: 2024/05/25 23:06:33 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/06 09:25:29 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	set_time_start(t_dt *dt)
 
 	if (gettimeofday(&time, NULL) == -1)
 	{
-		dt->config->time_start = -2;
+		dt->config->time_start->value = -2;
 		return ;
 	}
-	dt->config->time_start = (time.tv_sec * 1000000) + time.tv_usec;
+	dt->config->time_start->value = (time.tv_sec * 1000000) + time.tv_usec;
 }
 
 int	start_philos(t_dt *dt)
@@ -41,8 +41,8 @@ int	start_philos(t_dt *dt)
 		p = p->left;
 	}
 	i = -1;
-	pthread_mutex_lock(&dt->config->mutex_time);
+	pthread_mutex_lock(&dt->config->time_start->mutex);
 	set_time_start(dt);
-	pthread_mutex_unlock(&dt->config->mutex_time);
+	pthread_mutex_unlock(&dt->config->time_start->mutex);
 	return (1);
 }

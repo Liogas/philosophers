@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:31:47 by glions            #+#    #+#             */
-/*   Updated: 2024/05/25 19:34:52 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/06 09:51:24 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	free_dt(t_dt *dt)
 		if (dt->philos)
 			free_philos(dt->philos, dt->nbp);
 		if (dt->config)
-		{
-			pthread_mutex_destroy(&dt->config->mutex_time);
-			free(dt->config);
-		}
+			free_config(dt->config);
 		if (dt->threads)
 			free(dt->threads);
 		free(dt);

@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:32:49 by glions            #+#    #+#             */
-/*   Updated: 2024/05/25 19:18:19 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/06 10:05:00 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_fork	*create_fork(void)
 	new = malloc(sizeof(t_fork));
 	if (!new)
 		return (NULL);
-	new->in_table = 1;
+	new->state = 1;
 	if (pthread_mutex_init(&new->mutex, NULL))
 		return (free(new), NULL);
 	return (new);
