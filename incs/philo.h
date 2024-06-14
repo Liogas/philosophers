@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:58:01 by glions            #+#    #+#             */
-/*   Updated: 2024/06/06 09:34:27 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/14 11:39:48 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_dt
 	t_node_philo		*philos;
 	t_config_philo		*config;
 	pthread_t			*threads;
+	t_fork				**forks;
 	int					nbp;
 }						t_dt;
 
@@ -83,6 +84,7 @@ t_dt					*create_dt(char **av, int ac);
 void					free_dt(t_dt *dt);
 
 int						init_forks(t_dt *dt);
+void					free_forks(t_fork **tab, int size);
 
 t_config_philo			*dup_config(t_config_philo *config);
 t_config_philo			*create_config(char **av, int ac);

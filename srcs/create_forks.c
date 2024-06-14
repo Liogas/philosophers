@@ -6,13 +6,13 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:32:49 by glions            #+#    #+#             */
-/*   Updated: 2024/06/06 10:05:00 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/14 11:39:32 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	free_tab(t_fork	**tab, int size)
+void	free_forks(t_fork **tab, int size)
 {
 	int	i;
 
@@ -73,10 +73,10 @@ int	init_forks(t_dt	*dt)
 	{
 		tab[i] = create_fork();
 		if (!tab[i])
-			return (free_tab(tab, dt->nbp), 0);
+			return (free_forks(tab, dt->nbp), 0);
 	}
 	if (!assign_forks(dt, tab))
-		return (free_tab(tab, dt->nbp), 0);
-	free(tab);
+		return (free_forks(tab, dt->nbp), 0);
+	dt->forks = tab;
 	return (1);
 }

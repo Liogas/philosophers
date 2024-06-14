@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 10:26:48 by glions            #+#    #+#             */
-/*   Updated: 2024/05/25 19:32:22 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/14 11:58:17 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_all_dt(t_dt *dt, int ac)
 	printf("Time to die : %ld ms\n", dt->config->ttd);
 	printf("Time to eat : %ld ms\n", dt->config->tte);
 	printf("Time to sleep : %ld ms\n", dt->config->tts);
-	printf("Time start : %ld\n", dt->config->time_start);
+	printf("Time start : %ld\n", dt->config->time_start->value);
 	if (ac == 5)
 		printf("Limit : %d\n", dt->config->limit);
 	printf("\nPhilosophers :\n");
@@ -32,7 +32,6 @@ void	print_all_dt(t_dt *dt, int ac)
 	while (++i < dt->nbp && philo)
 	{
 		dt_philo = philo->dt;
-		(void)dt_philo;
 		printf("Philo[%d]-> [left->%d; right->%d]\n", philo->dt->id,
 			philo->left->dt->id, philo->right->dt->id);
 		printf("data->[fl->%p; rl->%p; status->%d; time_last_eat->%ld; config->%p]\n",

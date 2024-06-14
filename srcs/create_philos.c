@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:36:01 by glions            #+#    #+#             */
-/*   Updated: 2024/06/06 10:03:04 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/14 12:34:19 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_philo	*create_philo_dt(t_config_philo *c, int id)
 	new->fr = NULL;
 	new->exit_value = 0;
 	new->time = -1;
-	new->status = 0;
+	new->status = 1;
 	new->time_last_eat = c->ttd;
 	return (new);
 }

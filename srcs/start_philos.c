@@ -6,22 +6,23 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:31:06 by glions            #+#    #+#             */
-/*   Updated: 2024/06/06 09:25:29 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/14 11:58:04 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	set_time_start(t_dt *dt)
+int	set_time_start(t_dt *dt)
 {
 	struct timeval	time;
 
 	if (gettimeofday(&time, NULL) == -1)
 	{
 		dt->config->time_start->value = -2;
-		return ;
+		return (0);
 	}
 	dt->config->time_start->value = (time.tv_sec * 1000000) + time.tv_usec;
+	return (1);
 }
 
 int	start_philos(t_dt *dt)
@@ -42,7 +43,8 @@ int	start_philos(t_dt *dt)
 	}
 	i = -1;
 	pthread_mutex_lock(&dt->config->time_start->mutex);
-	set_time_start(dt);
+	if (!set_time_start(dt))
+		return (pthread_mutex_unlock(&dt->config->time_start->mutex), 0);
 	pthread_mutex_unlock(&dt->config->time_start->mutex);
 	return (1);
 }

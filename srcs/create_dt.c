@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 19:31:47 by glions            #+#    #+#             */
-/*   Updated: 2024/06/06 09:51:24 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/14 11:40:05 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_dt(t_dt *dt)
 			free_config(dt->config);
 		if (dt->threads)
 			free(dt->threads);
+		if (dt->forks)
+			free_forks(dt->forks, dt->nbp);
 		free(dt);
 	}
 }

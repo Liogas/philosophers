@@ -6,7 +6,7 @@
 /*   By: glions <glions@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:20:47 by glions            #+#    #+#             */
-/*   Updated: 2024/06/06 09:48:21 by glions           ###   ########.fr       */
+/*   Updated: 2024/06/14 14:32:11 by glions           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,69 @@ void	ft_wait(t_philo	*p)
 	}
 }
 
+int	update_time(t_philo *p)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		return (0);
+	p->time = ((time.tv_sec * 1000000) + time.tv_usec) - p->config->time_start->value;
+	return (1);
+}
+
+int	ft_routine(t_philo *p)
+{
+	if (!update_time(p))
+		return (0);
+	// printf("%ld > %ld - (%ld * 2)(%ld)\n", p->time / 1000, p->config->ttd, p->config->tte, p->config->tte * 2);
+	if (p->time / 1000 > p->config->ttd - (p->config->tte * 2))
+	{
+		pthread_mutex_lock(&p->fl->mutex);
+		if (!update_time(p))
+			return (0);
+		pthread_mutex_lock(&p->config->out->mutex);
+		printf("%ld %d has taken a fork\n", p->time / 1000, p->id);
+		pthread_mutex_unlock(&p->config->out->mutex);
+		pthread_mutex_lock(&p->fr->mutex);
+		if (!update_time(p))
+			return (0);
+		pthread_mutex_lock(&p->config->out->mutex);
+		printf("%ld %d has taken a fork\n", p->time / 1000, p->id);
+		pthread_mutex_unlock(&p->config->out->mutex);
+		if (!update_time(p))
+			return (0);
+		pthread_mutex_lock(&p->config->out->mutex);
+		printf("%ld %d is eating\n", p->time / 1000, p->id);
+		pthread_mutex_unlock(&p->config->out->mutex);
+		usleep(p->config->tte);
+		pthread_mutex_unlock(&p->fl->mutex);
+		pthread_mutex_unlock(&p->fr->mutex);
+		if (!update_time(p))
+			return (0);
+		pthread_mutex_lock(&p->config->out->mutex);
+		printf("%ld %d is sleeping\n", p->time / 1000, p->id);
+		pthread_mutex_unlock(&p->config->out->mutex);
+		usleep(p->config->tts);
+		if (!update_time(p))
+			return (0);
+		pthread_mutex_lock(&p->config->out->mutex);
+		printf("%ld %d is thinking\n", p->time / 1000, p->id);
+		pthread_mutex_unlock(&p->config->out->mutex);
+	}
+	return (1);
+}
+
 void	*ft_philo(void *philo)
 {
-	t_philo			*p;
-	struct timeval	time;
+	t_philo	*p;
+	int		e;
 
 	p = philo;
 	if (!p)
 		return (NULL);
 	ft_wait(p);
-	if (gettimeofday(&time, NULL) == -1)
+	if (!update_time(p))
 		return (NULL);
-	p->time = ((time.tv_sec * 1000000) + time.tv_usec) - p->config->time_start->value;
 	pthread_mutex_lock(&p->config->out->mutex);
 	if (!p->config->out->value)
 	{
@@ -56,11 +107,12 @@ void	*ft_philo(void *philo)
 	}
 	p->config->out->value = 0;
 	pthread_mutex_unlock(&p->config->out->mutex);
-	usleep(5000000);
-	if (gettimeofday(&time, NULL) == -1)
-		return (NULL);
-	p->time = ((time.tv_sec * 1000000) + time.tv_usec) - p->config->time_start->value;
-	printf("Philo[%d] : Apres pause de 5000 ms (%ld.%ld ms)\n", p->id, p->time / 1000, p->time % 1000);
+	e = 1;
+	while (e)
+	{
+		printf("Nouveau tour\n");
+		e = ft_routine(p);
+	}
 	p->exit_value = 1;
 	return ("OK");
 }
