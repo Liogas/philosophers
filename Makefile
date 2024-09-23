@@ -1,39 +1,69 @@
-CC 			= cc
-CFLAGS		= -Wall -Werror -Wextra -g3
-INCLUDES	= -I./incs/
-SRCS 		=	srcs/main.c srcs/utils.c srcs/create_config.c \
-				srcs/ft_ltoa.c srcs/ft_itoa.c srcs/create_philos.c \
-				srcs/create_forks.c srcs/ft_philo.c srcs/start_philos.c \
-				srcs/create_dt.c
-OBJS 		= $(SRCS:.c=.o)
-NAME 		= philo
+#==PROGRAM==#
+CC		= cc
+CFLAGS	= -Wall -Werror -Wextra -g3
+
+NAME	= philo
+
+#==TEST==#
+NB_PHILO	= 3
+TTD			= 605
+TTE			= 200
+TTS			= 200
+LIMIT		= 10
+
+#==SRC & OBJ==##
+SRCS		= supervisor.c fork_utils.c print.c routine.c utils.c time.c ft_itoa.c fork.c philo.c mutex.c free.c main.c
+OBJS		= $(SRCS:.c=.o)
+
+#==RULES==#
 
 all: $(NAME)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $^ $(INCLUDES)
+	@$(CC) $(CFLAGS) -o $@ -c $^
 
 $(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $@ -lpthread -D_REENTRANT
 	@clear
-	@echo "$(NAME)  ❌"
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(INCLUDES) -lpthread -D_REENTRANT
+	@echo "Try : ./philo [nb_philo] [time to died] [time to eat] [time to sleep] [limit (optional)]"
+
+clean:
+	@rm -rf $(OBJS)
+	@echo "objets : 🗑️"
+
+fclean: clean
+	@rm -rf $(NAME)
+	@echo "./philo: 🗑️"
+
+re: fclean all
+
+run_test: $(NAME)
 	@clear
-	@echo "$(NAME)  ✅"
+	@./philo $(NB_PHILO) $(TTD) $(TTE) $(TTS)
 
-clean :
-	@rm -f $(OBJS)
+run_test_limit: $(NAME)
+	@clear
+	@./philo $(NB_PHILO) $(TTD) $(TTE) $(TTS) $(LIMIT)
 
-fclean : clean
-	@rm -f $(NAME)
-	@echo "$(NAME)  ❌"
+run_test_v: $(NAME)
+	@clear
+	@valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes ./philo $(NB_PHILO) $(TTD) $(TTE) $(TTS)
 
-push:
-	@make fclean
+run_test_limit_v: $(NAME)
+	@clear
+	@valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes ./philo $(NB_PHILO) $(TTD) $(TTE) $(TTS) $(LIMIT)
+
+run_test_h: $(NAME)
+	@clear
+	@valgrind --tool=helgrind --error-limit=no ./philo $(NB_PHILO) $(TTD) $(TTE) $(TTS)
+
+run_test_limit_h: $(NAME)
+	@clear
+	@valgrind --tool=helgrind --error-limit=no ./philo $(NB_PHILO) $(TTD) $(TTE) $(TTS) $(LIMIT)
+
+push: fclean
 	@git add .
-	@git commit -m "Utilisation de push : ptetre plus d'infos dans le README"
+	@git commit -m "use make push"
 	@git push
-	@echo "✅ Le dossier a bien ete push ✅"
 
-re: fclean $(NAME)
-
-.PHONY: all clean fclean re push
+.PHONY: all clean fclean re run_test tun_test_v run_test_h push
